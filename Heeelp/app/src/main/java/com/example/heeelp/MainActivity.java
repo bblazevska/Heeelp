@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            ServiceBroadcastReceiver.scheduleJob(getApplicationContext());
+            com.example.heeelp.ServiceBroadcastReceiver.scheduleJob(getApplicationContext());
         } else {
 
             HelperServiceClass.launchService(getApplicationContext());

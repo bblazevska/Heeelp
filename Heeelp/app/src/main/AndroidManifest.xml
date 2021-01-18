@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.heeelp">
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.RECEIVE_LAUNCH_BROADCASTS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_LAUNCH_BROADCASTS" />
 
     <application
         android:allowBackup="true"
@@ -14,42 +14,46 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".LogInActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="true">
+        </activity>
 
         <service
-            android:name="JobScheduleService"
+            android:name=".JobScheduleService"
             android:enabled="true"
             android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE"></service>
+            android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name="ActiveService"
-            android:enabled="true"
-            android:exported="false"
+            android:name=".ActiveService"
             android:clearTaskOnLaunch="true"
+            android:enabled="true"
             android:excludeFromRecents="true"
+            android:exported="false"
             android:launchMode="singleInstance"
             tools:ignore="Instantiatable" />
 
         <receiver
-            android:name="ServiceBroadcastReceiver"
+            android:name=".ServiceBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
-                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
-                <action android:name="com.example.heeelp.activity.recognition.active_service.RestartActiveService"/>
+                <category android:name="android.intent.category.DEFAULT" />
 
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="com.example.heeelp.activity.recognition.active_service.RestartActiveService" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>
