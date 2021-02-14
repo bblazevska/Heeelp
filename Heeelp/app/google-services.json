@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "77277112412",
+    "firebase_url": "https://heeelp-f37d8.firebaseio.com",
+    "project_id": "heeelp-f37d8",
+    "storage_bucket": "heeelp-f37d8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77277112412:android:0ee9b28f0d3d3f9d0c9e99",
+        "android_client_info": {
+          "package_name": "com.example.heeelp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "77277112412-3prlcurrblqcn51ejjr79knohfi0r9k3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.heeelp",
+            "certificate_hash": "ebbdf7f56c661da04f047e08c20b38bfd8b5d736"
+          }
+        },
+        {
+          "client_id": "77277112412-3d1p1d3cv9tcjfs0mmm09g9v2hi6nnj5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbAqDL6i8dG81Jfy3hFrl7DKUyJmo_wY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "77277112412-3d1p1d3cv9tcjfs0mmm09g9v2hi6nnj5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
