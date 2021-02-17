@@ -70,8 +70,8 @@ public class LogInActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(LogInActivity.this, "User Logged In", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(LogInActivity.this, MainActivity.class));
-                                Log.d("From Log In Activity  :", "Starting Main activity");
+                                startActivity(new Intent(LogInActivity.this, UserScreen.class));
+//                                Log.d("From Log In Activity  :", "Starting Main activity");
                             } else {
                                 Toast.makeText(LogInActivity.this, "Can't log in user!" , Toast.LENGTH_LONG).show();
                             }

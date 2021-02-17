@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#A5B2FA"
+    tools:context=".UserScreen">
+    <Button
+        android:id="@+id/logOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="Log Out"
+        android:background="#A5B2FA"
+        android:layout_above="@id/wellcomeUser"
+        android:layout_marginBottom="70dp"
+        android:textStyle="italic"/>
+
+    <TextView
+        android:id="@+id/wellcomeUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView4"
+        android:layout_marginBottom="100dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:text=""
+        />
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="226dp"
+        android:layout_height="36dp"
+        android:layout_above="@+id/sendLocbtn"
+        android:layout_marginBottom="30dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:text="ASK FOR HELP"
+        android:textAlignment="center"
+        android:textColor="#0B0000"
+        android:textSize="30sp"
+        />
+    <Button
+        android:id="@+id/sendLocbtn"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="174dp"
+        android:layout_height="67dp"
+        android:text="Send Location"
+        android:background="#090808"
+        android:textColor="#A5B2FA"
+        android:textSize="18sp"
+        />
+</RelativeLayout>

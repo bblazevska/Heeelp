@@ -23,71 +23,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
-    LocationTracker  locationTracker;
-    private TextView wellcomeUser;
-    private Button sendLocation, logOut;
+
     Context mContext;
-    private FirebaseUser user;
-    private DatabaseReference reference;
-    private String userId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d(" from Main Activity", "  ACTIVITY STARTED");
+//        Log.d(" from Main Activity", "  ACTIVITY STARTED");
         mContext = this;
-        sendLocation = findViewById(R.id.sendLocbtn);
-        logOut = findViewById(R.id.logOut);
-        wellcomeUser = findViewById(R.id.wellcomeUser);
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("Users");
-        userId = user.getUid();
-
-        reference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User userProf = snapshot.getValue(User.class);
-
-                if(userProf != null){
-                    String fullName = userProf.fullName;
-
-                    wellcomeUser.setText("Welcome, " + fullName + "!");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(MainActivity.this, "Something went wrong!", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainActivity.this, LogInActivity.class));
-            }
-        });
-
-        sendLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                locationTracker = new LocationTracker(MainActivity.this);
-                if(locationTracker.canGetLocation()) {
-                    double latitude = locationTracker.getLatitude();
-                    double longitude = locationTracker.getLongitude();
-                    Toast.makeText(getApplicationContext(), "Your location is \n" +
-                            "Lat: " + latitude + " Long: " + longitude, Toast.LENGTH_LONG).show();
-                }else{
-                    locationTracker.showAlert();
-                }
-
-
-            }
-        });
     }
 
     @Override
