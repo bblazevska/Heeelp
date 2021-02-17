@@ -27,7 +27,7 @@
 
         <activity android:name=".UserScreen" />
         <activity
-            android:name=".LogInActivity"
+            android:name=".SignUpActivity"
             tools:ignore="MissingClass">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,7 +39,7 @@
             android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".LogInActivity"
             android:exported="true" />
 
         <service
