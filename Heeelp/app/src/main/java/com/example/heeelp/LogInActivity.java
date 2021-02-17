@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LogInActivity extends AppCompatActivity {
     private EditText password,email;
     private Button btnlogin;
-    private TextView tv_register,error;
+    private TextView tv_register;
     FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,7 @@ public class LogInActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         btnlogin = findViewById(R.id.login);
-        error = findViewById(R.id.error);
+
         tv_register = findViewById(R.id.tv_register);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -37,42 +39,52 @@ public class LogInActivity extends AppCompatActivity {
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String mail = email.getText().toString();
-                String pwd = password.getText().toString();
+                String mail = email.getText().toString().trim();
+                String pwd = password.getText().toString().trim();
 
                 if(mail.isEmpty())
                 {
-                    error.setText("Please enter your email");
+                    email.setError("Email is required!");
+                    email.requestFocus();
+                    return;
                 }
-                else if(pwd.isEmpty())
+                if(!Patterns.EMAIL_ADDRESS.matcher(mail).matches()){
+                    email.setError("Please enter a valid email!");
+                    email.requestFocus();
+                    return;
+                }
+                if(pwd.isEmpty())
                 {
-                    error.setText("Please enter password");
+                    password.setError("Password is required!");
+                    password.requestFocus();
+                    return;
                 }
-                else if (mail.isEmpty() && pwd.isEmpty())
-                {
-                    error.setText("Fields are empty!");
+                if(pwd.length() < 6 ){
+                    password.setError("Min password length is 6 characters!");
+                    password.requestFocus();
+                    return;
                 }
-                else if ( !(mail.isEmpty() && pwd.isEmpty())){
-                    firebaseAuth.signInWithEmailAndPassword(mail,pwd).addOnCompleteListener(LogInActivity.this, new OnCompleteListener<AuthResult>() {
+
+                firebaseAuth.signInWithEmailAndPassword(mail,pwd).addOnCompleteListener(LogInActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(LogInActivity.this, "User Logged In", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(getApplicationContext(),MainScreen.class));
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                startActivity(new Intent(LogInActivity.this, MainActivity.class));
+                                Log.d("From Log In Activity  :", "Starting Main activity");
                             } else {
-                                Toast.makeText(LogInActivity.this, "Error!" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(LogInActivity.this, "Can't log in user!" , Toast.LENGTH_LONG).show();
                             }
                         }
-                    });
+                });
                 }
-            }
+
         });
 
         tv_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),SignUpActivity.class));
+                startActivity(new Intent(LogInActivity.this,SignUpActivity.class));
             }
         });
 

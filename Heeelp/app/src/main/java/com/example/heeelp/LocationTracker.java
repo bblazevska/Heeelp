@@ -37,6 +37,7 @@ public class LocationTracker extends Service implements LocationListener {
         getLocation();
     }
 
+
     @SuppressLint("MissingPermission")
     public Location getLocation() {
         try {

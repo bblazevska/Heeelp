@@ -5,24 +5,28 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.heeelp.data.LoginRepository;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity {
 
     private EditText name,username,password;
     private Button btnsignup;
-    private TextView textView,error;
+    private TextView textView;
 
     FirebaseAuth mFirebaseAuth;
+    FirebaseDatabase firebaseDatabase;
 
 
     @Override
@@ -37,7 +41,7 @@ public class SignUpActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         btnsignup = findViewById(R.id.signup);
         textView = findViewById(R.id.textView);
-        error = findViewById(R.id.error);
+
 
         if(mFirebaseAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
@@ -47,44 +51,71 @@ public class SignUpActivity extends AppCompatActivity {
         btnsignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = username.getText().toString();
-                String pwd = password.getText().toString();
-
+                final String email = username.getText().toString();
+                final String pwd = password.getText().toString();
+                final String fullName = name.getText().toString();
                // Toast.makeText(SignUpActivity.this,"Registration unsuccessful,Please try again!",Toast.LENGTH_LONG).show();
 
-
+                if(fullName.isEmpty()){
+                    name.setError("Full Name is required!");
+                    name.requestFocus();
+                    return;
+                }
                 if(email.isEmpty())
                 {
-                    error.setText("Please enter your email");
+                    username.setError("Email is required!");
+                    username.requestFocus();
+                    return;
                 }
-                else if(pwd.isEmpty())
-                {
-                    error.setText("Please enter password");
+                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    username.setError("Please provide valid email!");
+                    username.requestFocus();
+                    return;
                 }
-                else if (email.isEmpty() && pwd.isEmpty())
+
+                if(pwd.isEmpty())
                 {
-                    error.setText("Fields are empty!");
+                    password.setError("Password is required!");
+                    password.requestFocus();
+                    return;
                 }
-                else if ( !(email.isEmpty() && pwd.isEmpty()))
-                {
-                    mFirebaseAuth.createUserWithEmailAndPassword(email,pwd).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+                if (pwd.length() <6){
+                    password.setError("Min password length should be 6 characters!");
+                    password.requestFocus();
+                    return;
+                }
+
+
+                    mFirebaseAuth.createUserWithEmailAndPassword(email,pwd)
+                            .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                Toast.makeText(SignUpActivity.this,"User Created", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                                
+                                User user = new User(fullName,email);
+
+
+                                firebaseDatabase.getInstance().getReference("Users")
+                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .setValue(user)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if(task.isSuccessful()){
+                                                    Toast.makeText(SignUpActivity.this,"User created successfully!", Toast.LENGTH_LONG).show();
+                                                    startActivity(new Intent(SignUpActivity.this, LogInActivity.class));
+                                                }else{
+                                                    Toast.makeText(SignUpActivity.this,"Failed to create user!"+ task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+                                        });
+                            }else{
+                                Toast.makeText(SignUpActivity.this,"Failed to create user!"+ task.getException().getMessage(),Toast.LENGTH_LONG).show();
                             }
-                            else{
-                                Toast.makeText(SignUpActivity.this,"Error!"+ task.getException().getMessage(),Toast.LENGTH_LONG).show();
-                            }
+
                         }
                     });
 
                 }
-
-            }
-
         });
 
         textView.setOnClickListener(new View.OnClickListener() {
