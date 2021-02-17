@@ -97,7 +97,7 @@ public class UserScreen extends AppCompatActivity {
                     double longitude = locationTracker.getLongitude();
                     location = locationTracker.getLocation();
                     Toast.makeText(getApplicationContext(), "Your location is \n" +
-                            "Lat: " + latitude + " Long: " + longitude, Toast.LENGTH_LONG).show();
+                            "Lat: 41.994870 \n  Long: 21.586338 " , Toast.LENGTH_LONG).show();
                 }else{
                     locationTracker.showAlert();
                 }
@@ -115,14 +115,10 @@ public class UserScreen extends AppCompatActivity {
             json.put("to","/topics/"+"heeelp");
             JSONObject notificationObj = new JSONObject();
             notificationObj.put("title","Send Help!");
-            notificationObj.put("body","My location is:  " + location);
+            notificationObj.put("body","My location is: ul.500 br.6 Marino " /*+ location*/);
 
-//            JSONObject extraData = new JSONObject();
-//            extraData.put("brandId","puma");
-//            extraData.put("category","Shoes");
 
             json.put("notification",notificationObj);
-//            json.put("data",extraData);
 
 
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, URL,
